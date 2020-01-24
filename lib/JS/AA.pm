@@ -14,7 +14,7 @@ our @EXPORT_OK = qw/
    aa_decode
 /;
 
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 
 our $aa_array = [        
     "(c^_^o)",
@@ -154,3 +154,56 @@ sub _list {
 }
 
 1;
+
+=encoding utf8
+
+=head1 NAME
+
+JS::AA - Encode and Decode AA
+
+=head1 SYNOPSIS
+
+    use JS::AA qw/
+        aa_encode
+        aa_decode
+    /;
+    
+    my $aa = aa_encode($js);
+    
+    my $js = aa_decode($aa);
+    
+=head1 DESCRIPTION
+    
+This module provides methods for encode and decode AA.
+
+=head1 METHODS
+
+=head2 aa_encode
+
+    my $aa = aa_encode($js);
+    
+Returns the aa.
+
+=head2 aa_decode
+
+    my $js = aa_decode($aa);
+    
+Returns the javascript.
+
+=head1 SEE ALSO
+
+L<Original encoder aaencode|http://utf-8.jp/public/aaencode.html>
+
+L<Original decoder aadecode|https://cat-in-136.github.io/2010/12/aadecode-decode-encoded-as-aaencode.html>
+
+=head1 AUTHOR
+ 
+Lucas Tiago de Moraes C<lucastiagodemoraes@gmail.com>
+ 
+=head1 COPYRIGHT AND LICENSE
+ 
+This software is copyright (c) 2020 by Lucas Tiago de Moraes.
+ 
+This is free software; you can redistribute it and/or modify it under the same terms as the Perl 5 programming language system itself.
+ 
+=cut
