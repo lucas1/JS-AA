@@ -14,7 +14,7 @@ our @EXPORT_OK = qw/
    aa_decode
 /;
 
-our $VERSION = 0.02;
+our $VERSION = 0.03;
 
 our $aa_array = [        
     "(c^_^o)",
@@ -55,9 +55,9 @@ our $aa_hash = {
 };
 
 sub aa_encode {
-    my ($self, $value) = @_;
+    my $value = shift;
     
-    my $encode = $self->_begin;
+    my $encode = &_begin;
     
     my @chars = unpack "U*", decode_utf8($value);
     
@@ -77,15 +77,15 @@ sub aa_encode {
         }
     }
     
-    $encode .= $self->_end;
+    $encode .= &_end;
 
-    return decode_utf8($encode);        
+    return $encode;        
 }
 
 sub aa_decode {
-    my ($self, $value) = @_;
+    my $value = shift;
     
-    my @data = $self->_split($value);
+    my @data = &_split($value);
     
     my $decode = '';
     
@@ -94,11 +94,11 @@ sub aa_decode {
         if ($data =~ /\Q(oﾟｰﾟo)+\E/) {
             $data =~ s/\Q(oﾟｰﾟo)+ \E//;
             
-            $number .= sprintf("%x", $aa_hash->{$_}) for $self->_list($data);
+            $number .= sprintf("%x", $aa_hash->{$_}) for &_list($data);
             
             $decode .= encode_utf8(chr(hex($number))) if $number;            
         } else {
-            $number .= $aa_hash->{$_} for $self->_list($data);
+            $number .= $aa_hash->{$_} for &_list($data);
             
             $decode .= chr(oct(int($number))) if $number;
         }
@@ -136,7 +136,7 @@ sub _end {
 }
 
 sub _split {
-    my ($self, $aa) = @_;
+    my $aa = shift;
     
     my ($new) = $aa =~ /\Q[ﾟoﾟ]+ \E(.*?)\Q(ﾟДﾟ)[ﾟoﾟ]) (ﾟΘﾟ)) ('_');\E/;
     
@@ -146,7 +146,7 @@ sub _split {
 }
 
 sub _list {
-    my ($self, $data) = @_;
+    my $data = shift;
     
     my (@array) = $data =~ /(\Q(c^_^o)\E|\Q(ﾟΘﾟ)\E|\Q((o^_^o) - (ﾟΘﾟ))\E|\Q(o^_^o)\E|\Q(ﾟｰﾟ)\E|\Q((ﾟｰﾟ) + (ﾟΘﾟ))\E|\Q((o^_^o) +(o^_^o))\E|\Q((ﾟｰﾟ) + (o^_^o))\E|\Q((ﾟｰﾟ) + (ﾟｰﾟ))\E|\Q((ﾟｰﾟ) + (ﾟｰﾟ) + (ﾟΘﾟ))\E|\Q(ﾟДﾟ) .ﾟωﾟﾉ\E|\Q(ﾟДﾟ) .ﾟΘﾟﾉ\E|\Q(ﾟДﾟ) ['c']\E|\Q(ﾟДﾟ) .ﾟｰﾟﾉ\E|\Q(ﾟДﾟ) .ﾟДﾟﾉ\E|\Q(ﾟДﾟ) [ﾟΘﾟ]\E)/g;
     
